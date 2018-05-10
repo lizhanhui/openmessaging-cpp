@@ -1,4 +1,11 @@
 #include <map>
+#include <vector>
+#include <csignal>
+
+#include <boost/thread.hpp>
+#include <boost/chrono.hpp>
+#include <boost/atomic.hpp>
+#include <boost/smart_ptr.hpp>
 
 #include "core.h"
 #include "consumer/PushConsumerImpl.h"
@@ -10,6 +17,12 @@
 using namespace io::openmessaging;
 using namespace io::openmessaging::consumer;
 
+BEGIN_NAMESPACE_2(io, openmessaging)
+    extern boost::mutex service_mtx;
+    extern std::vector<NS::shared_ptr<ServiceLifecycle> > services;
+    extern volatile boost::atomic_bool stopped;
+END_NAMESPACE_2(io, openmessaging)
+
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)
     boost::mutex listener_mutex;
     std::map<std::string, MessageListenerPtr> queue_listener_map;
@@ -19,6 +32,11 @@ BEGIN_NAMESPACE_3(io, openmessaging, consumer)
     std::map<int, interceptor::ConsumerInterceptorPtr> interceptorMap;
 
     void onMessage(JNIEnv *env, jobject object, jstring queue, jobject message, jobject context) {
+
+        if (stopped) {
+            return;
+        }
+
         const char* queue_name_char_ptr = env->GetStringUTFChars(queue, NULL);
         LOG_DEBUG << "Incoming Message Queue Name: " << queue_name_char_ptr;
         std::string queue_name(queue_name_char_ptr);
@@ -28,7 +46,7 @@ BEGIN_NAMESPACE_3(io, openmessaging, consumer)
             messageListenerPtr = queue_listener_map[queue_name];
         }
 
-        if (messageListenerPtr) {
+        if (!stopped && messageListenerPtr) {
             LOG_DEBUG << "Message Listener Found";
             NS::shared_ptr<Message> messagePtr = NS::make_shared<ByteMessageImpl>(message);
             NS::shared_ptr<Context> contextPtr = NS::make_shared<ContextImpl>(context);

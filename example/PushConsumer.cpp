@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 
     // Acquire messaging access point instance through factory method
     MessagingAccessPointPtr accessPoint(getMessagingAccessPoint(accessPointUrl));
+    accessPoint->startup();
 
     KeyValuePtr subKV(newKeyValue());
     const std::string value = "OMS_CONSUMER";

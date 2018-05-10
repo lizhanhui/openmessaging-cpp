@@ -1,14 +1,23 @@
+#include <vector>
+
 #include <cstdlib>
 #include <cstdarg>
 
 #include "core.h"
 
+#include <boost/thread.hpp>
+
+#include <boost/atomic.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/smart_ptr.hpp>
 
 BEGIN_NAMESPACE_2(io, openmessaging)
 
     using namespace boost::filesystem;
+
+    // forward declaration
+    class ServiceLifecycle;
 
     const char* Types::void_ = "V";
     const char* Types::boolean_ = "Z";
@@ -56,9 +65,21 @@ BEGIN_NAMESPACE_2(io, openmessaging)
         return signature + ")" + return_type;
     }
 
+    // The virtual machine
     JavaVM *jvm;
 
+    // The initial Java Invocation context
     JNIEnv *env;
+
+    // Mutex to protect the sequel services vector, which holds a smart pointer to created
+    // Producer / Consumer instances.
+    boost::mutex service_mtx;
+
+    // Vector holding smart pointers to created Producer/Consumer intances.
+    std::vector<NS::shared_ptr<ServiceLifecycle> > services;
+
+    // Indicate if the process has received a terminating signal: SIGINT / SIGTERM
+    volatile boost::atomic_bool stopped(false);
 
     boost::once_flag once_flag = BOOST_ONCE_INIT;
 
@@ -150,6 +171,22 @@ BEGIN_NAMESPACE_2(io, openmessaging)
 
     void Initialize() {
         boost::call_once(once_flag, init0);
+    }
+
+    void ShutdownVM() {
+        stopped.exchange(true);
+        if (jvm) {
+            LOG_INFO << "About to unload VM";
+            jvm->DestroyJavaVM();
+            const char* msg = "The VM waits until the current thread is the only non-daemon user thread before it "
+                              "actually unloads. User threads include both Java threads and attached native threads. "
+                              "This restriction exists because a Java thread or attached native thread may be holding "
+                              "system resources, such as locks, windows, and so on. The VM cannot automatically free "
+                              "these resources. By restricting the current thread to be the only running thread when the"
+                              " VM is unloaded, the burden of releasing system resources held by arbitrary threads is on"
+                              " the programmer.";
+            LOG_INFO << msg;
+        }
     }
 
     std::set<std::string> toNativeSet(CurrentEnv &current, jobject s) {

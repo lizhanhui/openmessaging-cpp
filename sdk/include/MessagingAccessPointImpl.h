@@ -28,6 +28,8 @@ BEGIN_NAMESPACE_2(io, openmessaging)
 
         jobject getProxy();
 
+        virtual void startup();
+
     private:
         const std::string _url;
 

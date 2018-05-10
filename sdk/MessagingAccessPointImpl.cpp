@@ -10,6 +10,41 @@ using namespace io::openmessaging::producer;
 using namespace io::openmessaging::consumer;
 using namespace io::openmessaging::observer;
 
+BEGIN_NAMESPACE_2(io, openmessaging)
+    extern boost::mutex service_mtx;
+    extern std::vector<NS::shared_ptr<ServiceLifecycle> > services;
+    extern volatile boost::atomic_bool stopped;
+
+    void signal_handler(int sig_num) {
+        if (SIGINT == sig_num) {
+            LOG_INFO << "Received SIGINT signal";
+        }
+
+        if (SIGTERM == sig_num) {
+            LOG_INFO << "Received SIGTERM signal";
+        }
+
+        stopped.exchange(true);
+
+        {
+            boost::lock_guard<boost::mutex> lk(service_mtx);
+            LOG_INFO << services.size() << " services to shutdown";
+            // Avoid using of auto to make the code C++98 compatible
+            for(std::vector<NS::shared_ptr<ServiceLifecycle> >::iterator it = services.begin();
+                it < services.end(); it++) {
+                NS::shared_ptr<ServiceLifecycle> item = *it;
+                item->shutdown();
+                services.erase(it);
+                LOG_INFO << "Shutdown [OK]";
+            }
+        }
+
+        ShutdownVM();
+    }
+
+
+END_NAMESPACE_2(io, openmessaging)
+
 MessagingAccessPointImpl::MessagingAccessPointImpl(const std::string &url,
                                                    const KeyValuePtr &props,
                                                    jobject proxy) :
@@ -68,6 +103,11 @@ ProducerPtr MessagingAccessPointImpl::createProducer(const KeyValuePtr &props) {
     jobject producer = current.newGlobalRef(producerLocal);
 
     NS::shared_ptr<Producer> ret = NS::make_shared<ProducerImpl>(producer, props);
+    {
+        boost::lock_guard<boost::mutex> lk(service_mtx);
+        services.push_back(ret);
+    }
+
     return ret;
 }
 
@@ -83,6 +123,11 @@ consumer::PushConsumerPtr MessagingAccessPointImpl::createPushConsumer(const Key
 
     jobject pushConsumer = current.newGlobalRef(pushConsumerLocal);
     NS::shared_ptr<PushConsumer> ret = NS::make_shared<PushConsumerImpl>(pushConsumer);
+    {
+        boost::lock_guard<boost::mutex> lk(service_mtx);
+        services.push_back(ret);
+    }
+
     return ret;
 }
 
@@ -98,6 +143,11 @@ consumer::PullConsumerPtr MessagingAccessPointImpl::createPullConsumer(const Key
 
     jobject pullConsumer = current.newGlobalRef(pullConsumerLocal);
     NS::shared_ptr<PullConsumer> ret = NS::make_shared<PullConsumerImpl>(pullConsumer);
+    {
+        boost::lock_guard<boost::mutex> lk(service_mtx);
+        services.push_back(ret);
+    }
+
     return ret;
 }
 
@@ -111,6 +161,12 @@ ResourceManagerPtr MessagingAccessPointImpl::resourceManager() {
 
 jobject MessagingAccessPointImpl::getProxy() {
     return _proxy;
+}
+
+void MessagingAccessPointImpl::startup() {
+    ServiceLifecycleImpl::startup();
+    signal(SIGINT, signal_handler);
+    signal(SIGTERM, signal_handler);
 }
 
 MessagingAccessPointImpl::~MessagingAccessPointImpl() {

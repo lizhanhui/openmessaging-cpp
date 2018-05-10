@@ -69,6 +69,8 @@ BEGIN_NAMESPACE_2(io, openmessaging)
 
     std::string build_class_path_option();
 
+    void ShutdownVM();
+
 END_NAMESPACE_2(io, openmessaging)
 
 #endif //OMS_CORE_H
