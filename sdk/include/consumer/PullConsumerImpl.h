@@ -26,6 +26,8 @@ BEGIN_NAMESPACE_3(io, openmessaging, consumer)
 
         jobject getProxy();
 
+        virtual void shutdown();
+
     private:
         jclass classPullConsumer;
         jmethodID midAttributes;
@@ -36,6 +38,8 @@ BEGIN_NAMESPACE_3(io, openmessaging, consumer)
         jmethodID midReceive2;
         jmethodID midAck;
         jmethodID midAck2;
+
+        volatile boost::atomic_bool stopped;
     };
 
 END_NAMESPACE_3(io, openmessaging, core)

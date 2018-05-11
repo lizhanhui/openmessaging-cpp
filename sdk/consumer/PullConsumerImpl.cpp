@@ -5,7 +5,7 @@
 using namespace io::openmessaging;
 using namespace io::openmessaging::consumer;
 
-PullConsumerImpl::PullConsumerImpl(jobject proxy) : ServiceLifecycleImpl(proxy) {
+PullConsumerImpl::PullConsumerImpl(jobject proxy) : ServiceLifecycleImpl(proxy), stopped(false) {
     CurrentEnv current;
     const char *klassPullConsumer = "io/openmessaging/consumer/PullConsumer";
     classPullConsumer = current.findClass(klassPullConsumer);
@@ -34,6 +34,11 @@ KeyValuePtr PullConsumerImpl::attributes() {
 }
 
 PullConsumer& PullConsumerImpl::attachQueue(const std::string &queueName, const KeyValuePtr &properties) {
+    if (stopped) {
+        LOG_WARNING << "This pull consumer has been stopped";
+        return *this;
+    }
+
     CurrentEnv current;
     jstring jQueueName = current.newStringUTF(queueName.c_str());
     jobject jPullConsumer;
@@ -51,6 +56,12 @@ PullConsumer& PullConsumerImpl::attachQueue(const std::string &queueName, const 
 }
 
 PullConsumer& PullConsumerImpl::detachQueue(const std::string &queueName) {
+
+    if (stopped) {
+        LOG_WARNING << "This pull consumer has stopped";
+        return *this;
+    }
+
     CurrentEnv context;
     jstring jQueueName = context.newStringUTF(queueName.c_str());
     jobject jPullConsumer = context.callObjectMethod(_proxy, midDetachQueue, jQueueName);
@@ -62,6 +73,12 @@ PullConsumer& PullConsumerImpl::detachQueue(const std::string &queueName) {
 }
 
 MessagePtr PullConsumerImpl::receive(const KeyValuePtr &props) {
+
+    if (stopped) {
+        MessagePtr msg_nullptr;
+        return msg_nullptr;
+    }
+
     CurrentEnv current;
 
     jobject jMessageLocal;
@@ -72,7 +89,7 @@ MessagePtr PullConsumerImpl::receive(const KeyValuePtr &props) {
         jMessageLocal = current.callObjectMethod(_proxy, midReceive);
     }
 
-    if (jMessageLocal) {
+    if (jMessageLocal && !stopped) {
         jobject jMessage = current.newGlobalRef(jMessageLocal);
        MessagePtr messagePtr = NS::make_shared<ByteMessageImpl>(jMessage);
         return messagePtr;
@@ -85,6 +102,11 @@ MessagePtr PullConsumerImpl::receive(const KeyValuePtr &props) {
 }
 
 void PullConsumerImpl::ack(const std::string &messageId, const KeyValuePtr &props) {
+
+    if (stopped) {
+        return;
+    }
+
     CurrentEnv current;
 
     jstring msgId = current.newStringUTF(messageId.c_str());
@@ -100,4 +122,9 @@ void PullConsumerImpl::ack(const std::string &messageId, const KeyValuePtr &prop
 
 jobject PullConsumerImpl::getProxy() {
     return _proxy;
+}
+
+void PullConsumerImpl::shutdown() {
+    stopped.exchange(true);
+    ServiceLifecycleImpl::shutdown();
 }

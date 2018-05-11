@@ -1,3 +1,5 @@
+#include <boost/unordered_map.hpp>
+
 #include "core.h"
 #include "MessagingAccessPointImpl.h"
 #include "KeyValueImpl.h"
@@ -11,6 +13,7 @@ using namespace io::openmessaging::consumer;
 using namespace io::openmessaging::observer;
 
 BEGIN_NAMESPACE_2(io, openmessaging)
+<<<<<<< HEAD
     extern boost::mutex service_mtx;
     extern std::vector<NS::shared_ptr<ServiceLifecycle> > services;
     extern volatile boost::atomic_bool stopped;
@@ -43,6 +46,10 @@ BEGIN_NAMESPACE_2(io, openmessaging)
     }
 
 
+=======
+    extern boost::unordered_map<std::string, MessagingAccessPointPtr> access_points;
+    extern boost::recursive_mutex access_point_mtx;
+>>>>>>> a3519cb... shutdown gracefully
 END_NAMESPACE_2(io, openmessaging)
 
 MessagingAccessPointImpl::MessagingAccessPointImpl(const std::string &url,
@@ -163,10 +170,28 @@ jobject MessagingAccessPointImpl::getProxy() {
     return _proxy;
 }
 
+<<<<<<< HEAD
 void MessagingAccessPointImpl::startup() {
     ServiceLifecycleImpl::startup();
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
+=======
+void MessagingAccessPointImpl::shutdown() {
+
+    {
+        boost::lock_guard<boost::recursive_mutex> lk(access_point_mtx);
+        boost::unordered_map<std::string, MessagingAccessPointPtr>::iterator found =
+                access_points.find(_url);
+        if (found != access_points.end()) {
+            access_points.erase(_url);
+            LOG_DEBUG << "Remove access point[" << _url << "] Done";
+        } else {
+            LOG_WARNING << "Access point not found for url: " << _url;
+        }
+    }
+
+    ServiceLifecycleImpl::shutdown();
+>>>>>>> a3519cb... shutdown gracefully
 }
 
 MessagingAccessPointImpl::~MessagingAccessPointImpl() {

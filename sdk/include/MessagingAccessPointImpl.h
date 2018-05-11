@@ -26,6 +26,8 @@ BEGIN_NAMESPACE_2(io, openmessaging)
 
         ResourceManagerPtr resourceManager();
 
+        void shutdown();
+
         jobject getProxy();
 
         virtual void startup();

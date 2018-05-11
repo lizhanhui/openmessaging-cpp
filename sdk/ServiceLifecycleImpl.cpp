@@ -23,4 +23,5 @@ void ServiceLifecycleImpl::startup() {
 void ServiceLifecycleImpl::shutdown() {
     CurrentEnv context;
     context.callVoidMethod(_proxy, midShutdown);
+    LOG_DEBUG << "Shutdown OK";
 }

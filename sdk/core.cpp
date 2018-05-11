@@ -308,4 +308,12 @@ BEGIN_NAMESPACE_2(io, openmessaging)
         return option + expanded_class_path;
     }
 
+    void Shutdown() {
+        if (jvm) {
+            LOG_INFO << "About to shutdown virtual machine";
+            jvm->DestroyJavaVM();
+            LOG_INFO << "Destroy VM called. VM may exit after all non-daemon threads except current one quit";
+        }
+    }
+
 END_NAMESPACE_2(io, openmessaging)

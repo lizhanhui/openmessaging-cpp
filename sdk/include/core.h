@@ -69,7 +69,11 @@ BEGIN_NAMESPACE_2(io, openmessaging)
 
     std::string build_class_path_option();
 
+<<<<<<< HEAD
     void ShutdownVM();
+=======
+    void Shutdown();
+>>>>>>> a3519cb... shutdown gracefully
 
 END_NAMESPACE_2(io, openmessaging)
 
