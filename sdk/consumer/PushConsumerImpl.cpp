@@ -30,8 +30,8 @@ BEGIN_NAMESPACE_3(io, openmessaging, consumer)
 
         if (messageListenerPtr) {
             LOG_DEBUG << "Message Listener Found";
-            NS::shared_ptr<Message> messagePtr = NS::make_shared<ByteMessageImpl>(message);
-            NS::shared_ptr<Context> contextPtr = NS::make_shared<ContextImpl>(context);
+            NS::shared_ptr<Message> messagePtr(new ByteMessageImpl(message));
+            NS::shared_ptr<Context> contextPtr(new ContextImpl(context));
             messageListenerPtr->onMessage(messagePtr, contextPtr);
         }
     }
@@ -156,7 +156,7 @@ KeyValuePtr PushConsumerImpl::attributes() {
     CurrentEnv ctx;
     jobject propertiesLocal = ctx.callObjectMethod(_proxy, midAttributes);
     jobject globalRef = ctx.newGlobalRef(propertiesLocal);
-    KeyValuePtr ret = NS::make_shared<KeyValueImpl>(globalRef);
+    KeyValuePtr ret(new KeyValueImpl(globalRef));
     return ret;
 }
 

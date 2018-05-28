@@ -16,7 +16,7 @@ public:
 
         Initialize();
 
-        boost::shared_ptr<KeyValue> properties = boost::make_shared<KeyValueImpl>();
+        boost::shared_ptr<KeyValue> properties(new KeyValueImpl());
         properties->put(driverClassKey, driverClass);
 
         boost::shared_ptr<MessagingAccessPoint> messagingAccessPoint =

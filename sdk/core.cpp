@@ -84,7 +84,7 @@ BEGIN_NAMESPACE_2(io, openmessaging)
 
         init_logging();
 
-        NS::shared_ptr<JavaOption> jOptions = NS::make_shared<JavaOption>(JNI_VERSION_1_8);
+        NS::shared_ptr<JavaOption> jOptions(new JavaOption(JNI_VERSION_1_8));
         std::string class_path_option = build_class_path_option();
         jOptions->addOption(class_path_option);
 

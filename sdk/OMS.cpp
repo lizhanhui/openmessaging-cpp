@@ -43,7 +43,7 @@ getMessagingAccessPointImpl(const std::string &url, const NS::shared_ptr<KeyValu
     current.deleteRef(accessUrl);
     current.deleteRef(classOMS);
     jobject globalRef = current.newGlobalRef(messagingAccessPoint);
-    return NS::make_shared<MessagingAccessPointImpl>(url, props, globalRef);
+    return MessagingAccessPointPtr(new MessagingAccessPointImpl(url, props, globalRef));
 }
 
 KeyValuePtr newKeyValueImpl() {
@@ -53,5 +53,5 @@ KeyValuePtr newKeyValueImpl() {
     jclass classDefaultKeyValue = current.findClass(klassDefaultKeyValue);
     jmethodID ctor = current.getMethodId(classDefaultKeyValue, "<init>", "()V");
     jobject objectDefaultKeyValue = current.newObject(classDefaultKeyValue, ctor);
-    return NS::make_shared<KeyValueImpl>(objectDefaultKeyValue);
+    return KeyValuePtr(new KeyValueImpl(objectDefaultKeyValue));
 }

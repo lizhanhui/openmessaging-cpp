@@ -2,7 +2,6 @@ include_directories(include)
 
 add_executable(runUnitTests
         RunAllTest.cpp
-        smart_pointer_test.cpp
         CountdownLatch.cpp
         ManagedArrayTest.cpp
         ByteMessageImplTest.cpp

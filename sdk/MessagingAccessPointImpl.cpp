@@ -67,7 +67,7 @@ ProducerPtr MessagingAccessPointImpl::createProducer(const KeyValuePtr &props) {
 
     jobject producer = current.newGlobalRef(producerLocal);
 
-    NS::shared_ptr<Producer> ret = NS::make_shared<ProducerImpl>(producer, props);
+    NS::shared_ptr<Producer> ret(new ProducerImpl(producer, props));
     return ret;
 }
 
@@ -82,7 +82,7 @@ consumer::PushConsumerPtr MessagingAccessPointImpl::createPushConsumer(const Key
     }
 
     jobject pushConsumer = current.newGlobalRef(pushConsumerLocal);
-    NS::shared_ptr<PushConsumer> ret = NS::make_shared<PushConsumerImpl>(pushConsumer);
+    NS::shared_ptr<PushConsumer> ret(new PushConsumerImpl(pushConsumer));
     return ret;
 }
 
@@ -97,7 +97,7 @@ consumer::PullConsumerPtr MessagingAccessPointImpl::createPullConsumer(const Key
     }
 
     jobject pullConsumer = current.newGlobalRef(pullConsumerLocal);
-    NS::shared_ptr<PullConsumer> ret = NS::make_shared<PullConsumerImpl>(pullConsumer);
+    NS::shared_ptr<PullConsumer> ret(new PullConsumerImpl(pullConsumer));
     return ret;
 }
 

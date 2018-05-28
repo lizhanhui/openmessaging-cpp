@@ -59,7 +59,7 @@ BEGIN_NAMESPACE_3(io, openmessaging, producer)
             jobject objectSendResultLocal = current.callObjectMethod(jFuture, midGet);
             jobject objectSendResult = current.newGlobalRef(objectSendResultLocal);
             if (objectSendResult) {
-                NS::shared_ptr<SendResult> sendResultPtr = NS::make_shared<SendResultImpl>(objectSendResult);
+                NS::shared_ptr<SendResult> sendResultPtr(new SendResultImpl(objectSendResult));
                 promise->set(sendResultPtr);
             }
         }
@@ -201,7 +201,7 @@ SendResultPtr ProducerImpl::send(const MessagePtr &message, const KeyValuePtr &p
         jSendResult = current.newGlobalRef(ret);
     }
 
-    SendResultPtr sendResult = NS::make_shared<SendResultImpl>(jSendResult);
+    SendResultPtr sendResult(new SendResultImpl(jSendResult));
     return sendResult;
 }
 
@@ -215,7 +215,7 @@ ByteMessagePtr ProducerImpl::createBytesMessage(const std::string &topic, const 
     current.deleteRef(pBody);
     current.deleteRef(pTopic);
 
-    NS::shared_ptr<ByteMessage> message = NS::make_shared<ByteMessageImpl>(current.newGlobalRef(jMessage));
+    NS::shared_ptr<ByteMessage> message(new ByteMessageImpl(current.newGlobalRef(jMessage)));
     return message;
 }
 
@@ -228,14 +228,14 @@ SendResultPtr ProducerImpl::send(const MessagePtr &message,
     jobject kv = (dynamic_cast<KeyValueImpl*>(props.get()))->getProxy();
     jobject jSendResult = current.callObjectMethod(_proxy, midSend3, msg, exec, NULL, kv);
 
-    NS::shared_ptr<SendResultImpl> ret = NS::make_shared<SendResultImpl>(current.newGlobalRef(jSendResult));
+    NS::shared_ptr<SendResultImpl> ret(new SendResultImpl(current.newGlobalRef(jSendResult)));
     return ret;
 }
 
 FuturePtr ProducerImpl::sendAsync(const MessagePtr &message, const KeyValuePtr &props) {
     CurrentEnv current;
     jobject msg = (dynamic_cast<ByteMessageImpl*>(message.get()))->getProxy();
-    NS::shared_ptr<Promise> ft = NS::make_shared<PromiseImpl>();
+    NS::shared_ptr<Promise> ft(new PromiseImpl());
     long long opaque;
     {
         opaque = ++sendOpaque;

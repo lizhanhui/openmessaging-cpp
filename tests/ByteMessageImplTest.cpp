@@ -48,14 +48,14 @@ protected:
 };
 
 TEST_F(ByteMessageImplTest, testUserHeaders) {
-    NS::shared_ptr<KeyValue> userHeaders = byteMessage->userHeaders();
-    ASSERT_TRUE(userHeaders != NULL);
+    KeyValuePtr userHeaders = byteMessage->userHeaders();
+    ASSERT_TRUE(userHeaders.get() != NULL);
 }
 
 
 TEST_F(ByteMessageImplTest, testSysHeaders) {
-    NS::shared_ptr<KeyValue> userHeaders = byteMessage->sysHeaders();
-    ASSERT_TRUE(userHeaders != NULL);
+    KeyValuePtr userHeaders = byteMessage->sysHeaders();
+    ASSERT_TRUE(userHeaders.get() != NULL);
 }
 
 TEST_F(ByteMessageImplTest, testPutUserHeadersInt) {

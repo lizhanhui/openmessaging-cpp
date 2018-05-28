@@ -1,6 +1,7 @@
 #ifndef OMS_SMART_POINTER_H
 #define OMS_SMART_POINTER_H
 
+#include <cstddef>
 #include "OMSException.h"
 
 // In case C++11 or later version is available.
@@ -9,16 +10,13 @@
     #define NS std
     #define USE_CXX_11 1
 #else
-    // If boost is used, we would use Boost.SmartPointer
-    #ifdef USE_BOOST
-        #include <boost/smart_ptr.hpp>
-        #define NS boost
-    #else
-        #include "shared_ptr.hpp"
-        #include <cstring>
-        #define NS io::openmessaging
-    #endif
-
+#   if defined(__GNUC__) && __GNUC__ >= 4 && defined(__GLIBCXX__)
+#      include <tr1/memory>
+#      define NS std::tr1
+#   else
+#      include <memory>
+#      define NS std
+#   endif
 #endif
 
 #include <cstring>

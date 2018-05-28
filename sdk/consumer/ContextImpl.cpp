@@ -25,7 +25,7 @@ KeyValuePtr ContextImpl::attributes() {
     CurrentEnv current;
     jobject jPropertiesLocal = current.callObjectMethod(_proxy, midAttributes);
     jobject jProps = current.newGlobalRef(jPropertiesLocal);
-    return NS::make_shared<KeyValueImpl>(jProps);
+    return KeyValuePtr(new KeyValueImpl(jProps));
 }
 
 void ContextImpl::ack() {

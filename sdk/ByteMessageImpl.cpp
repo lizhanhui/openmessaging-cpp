@@ -43,14 +43,14 @@ ByteMessageImpl::~ByteMessageImpl() {
 NS::shared_ptr<KeyValue> ByteMessageImpl::sysHeaders() {
     CurrentEnv current;
     jobject jSysHeader = current.callObjectMethod(objectByteMessage, midSysHeaders);
-    NS::shared_ptr<KeyValue> headers = NS::make_shared<KeyValueImpl>(current.newGlobalRef(jSysHeader));
+    NS::shared_ptr<KeyValue> headers(new KeyValueImpl(current.newGlobalRef(jSysHeader)));
     return headers;
 }
 
 NS::shared_ptr<KeyValue> ByteMessageImpl::userHeaders() {
     CurrentEnv current;
     jobject jUserHeaders = current.callObjectMethod(objectByteMessage, midUserHeaders);
-    NS::shared_ptr<KeyValue> headers = NS::make_shared<KeyValueImpl>(current.newGlobalRef(jUserHeaders));
+    NS::shared_ptr<KeyValue> headers(new KeyValueImpl(current.newGlobalRef(jUserHeaders)));
     return headers;
 }
 
