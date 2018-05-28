@@ -1,11 +1,11 @@
 #ifndef OMS_PRODUCER_IMPL_H
 #define OMS_PRODUCER_IMPL_H
 
-#include "producer/Producer.h"
-#include "MessageFactory.h"
+#include "oms/producer/Producer.h"
+#include "oms/MessageFactory.h"
 #include "ByteMessageImpl.h"
 #include "core.h"
-#include "Namespace.h"
+#include "oms/Namespace.h"
 #include "ServiceLifecycleImpl.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, producer)

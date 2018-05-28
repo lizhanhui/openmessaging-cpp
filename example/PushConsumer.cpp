@@ -1,5 +1,5 @@
 #include <plog/Log.h>
-#include <OpenMessaging.h>
+#include <oms/OpenMessaging.h>
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)
 

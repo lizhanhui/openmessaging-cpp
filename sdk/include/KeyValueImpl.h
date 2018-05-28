@@ -1,9 +1,10 @@
 #ifndef OMS_KEY_VALUE_IMPL_H
 #define OMS_KEY_VALUE_IMPL_H
 
+#include "oms/Namespace.h"
+#include "oms/KeyValue.h"
+
 #include "core.h"
-#include "KeyValue.h"
-#include "Namespace.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
     class KeyValueImpl : public virtual KeyValue {

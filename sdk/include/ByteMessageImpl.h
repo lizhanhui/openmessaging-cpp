@@ -1,7 +1,7 @@
 #ifndef OMS_BYTE_MESSAGE_IMPL_H
 #define OMS_BYTE_MESSAGE_IMPL_H
 
-#include "ByteMessage.h"
+#include "oms/ByteMessage.h"
 #include "core.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)

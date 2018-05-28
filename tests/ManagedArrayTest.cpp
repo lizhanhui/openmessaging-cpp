@@ -1,6 +1,6 @@
 #include <iostream>
 #include <gtest/gtest.h>
-#include "OMS.h"
+#include "oms/Dynamic.h"
 
 using namespace std;
 using namespace io::openmessaging;

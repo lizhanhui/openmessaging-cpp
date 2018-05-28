@@ -1,9 +1,9 @@
 #ifndef OMS_SEND_RESULT_IMPL_H
 #define OMS_SEND_RESULT_IMPL_H
 
-#include "Namespace.h"
+#include "oms/Namespace.h"
 #include "core.h"
-#include "producer/SendResult.h"
+#include "oms/producer/SendResult.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, producer)
 

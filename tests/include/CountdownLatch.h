@@ -2,7 +2,7 @@
 #define OMS_COUNTDOWN_LATCH_H
 
 #include "core.h"
-#include "Namespace.h"
+#include "oms/Namespace.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
     class CountdownLatch {

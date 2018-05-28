@@ -2,7 +2,7 @@
 #define OMS_LOCAL_TRANSACTION_BRANCH_EXECUTOR_IMPL_H
 
 #include "core.h"
-#include "producer/LocalTransactionExecutor.h"
+#include "oms/producer/LocalTransactionExecutor.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, producer)
 

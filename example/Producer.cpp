@@ -1,6 +1,6 @@
 #include <plog/Log.h>
 #include <cstdlib>
-#include <OpenMessaging.h>
+#include <oms/OpenMessaging.h>
 
 using namespace std;
 using namespace io::openmessaging;

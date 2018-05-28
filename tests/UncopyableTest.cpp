@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Uncopyable.h"
+#include "oms/Uncopyable.h"
 
 using namespace io::openmessaging;
 

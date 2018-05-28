@@ -5,9 +5,9 @@
 
 #include <plog/Log.h>
 
-#include "Namespace.h"
-#include "Uncopyable.h"
-#include "OMSException.h"
+#include "oms/Namespace.h"
+#include "oms/Uncopyable.h"
+#include "oms/OMSException.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
     class CurrentEnv : private Uncopyable {

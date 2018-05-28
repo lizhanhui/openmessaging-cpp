@@ -3,11 +3,11 @@
 
 #include <vector>
 
-#include "smart_pointer.h"
+#include "oms/Portable.h"
 
 #include <boost/thread.hpp>
-#include "Promise.h"
-#include "producer/SendResult.h"
+#include "oms/Promise.h"
+#include "oms/producer/SendResult.h"
 
 
 BEGIN_NAMESPACE_2(io, openmessaging)

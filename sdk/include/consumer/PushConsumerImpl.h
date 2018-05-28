@@ -1,9 +1,9 @@
 #ifndef OMS_PUSH_CONSUMER_IMPL_H
 #define OMS_PUSH_CONSUMER_IMPL_H
 
-#include "Namespace.h"
+#include "oms/Namespace.h"
 #include "core.h"
-#include "consumer/PushConsumer.h"
+#include "oms/consumer/PushConsumer.h"
 #include "ServiceLifecycleImpl.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)

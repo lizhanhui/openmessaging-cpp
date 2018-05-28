@@ -4,7 +4,7 @@
 #include <set>
 #include <string>
 
-#include "smart_pointer.h"
+#include "oms/Portable.h"
 
 #include <boost/thread.hpp>
 #include <boost/date_time.hpp>
@@ -12,7 +12,7 @@
 #include <plog/Appenders/ColorConsoleAppender.h>
 
 #include "JavaOption.h"
-#include "Namespace.h"
+#include "oms/Namespace.h"
 #include "CurrentEnv.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)

@@ -1,10 +1,10 @@
 #ifndef OMS_PULL_CONSUMER_IMPL_H
 #define OMS_PULL_CONSUMER_IMPL_H
 
-#include "Namespace.h"
+#include "oms/Namespace.h"
 #include "core.h"
 #include "ServiceLifecycleImpl.h"
-#include "consumer/PullConsumer.h"
+#include "oms/consumer/PullConsumer.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)
 

@@ -1,8 +1,8 @@
 #ifndef OMS_CONTEXT_IMPL_H
 #define OMS_CONTEXT_IMPL_H
 
-#include "Namespace.h"
-#include "consumer/Context.h"
+#include "oms/Namespace.h"
+#include "oms/consumer/Context.h"
 #include "core.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)

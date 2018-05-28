@@ -1,7 +1,7 @@
 #include <string>
 #include <gtest/gtest.h>
 #include "ByteMessageImpl.h"
-#include "OMSException.h"
+#include "oms/OMSException.h"
 
 using namespace std;
 using namespace io::openmessaging;

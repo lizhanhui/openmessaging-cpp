@@ -16,20 +16,19 @@ endif ()
 
 # Check support of C++11
 include(CheckCXXCompilerFlag)
-#if (CMAKE_VERSION VERSION_LESS 3.1)
-#    CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-#    CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-#    if (COMPILER_SUPPORTS_CXX11)
-#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-#    endif ()
-#
-#    if (COMPILER_SUPPORTS_CXX0X)
-#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-#    endif ()
-#else()
-#    set(CMAKE_CXX_STANDARD 11)
-#endif ()
-set(CMAKE_CXX_STANDARD 98)
+if (CMAKE_VERSION VERSION_LESS 3.1)
+    CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+    CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+    if (COMPILER_SUPPORTS_CXX11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    endif ()
+
+    if (COMPILER_SUPPORTS_CXX0X)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    endif ()
+else()
+    set(CMAKE_CXX_STANDARD 11)
+endif ()
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -53,7 +52,8 @@ find_library(BOOST_thread_LIBRARY NAMES libboost_thread.a libboost_thread-mt.a)
 find_library(BOOST_filesystem_LIBRARY NAMES libboost_filesystem.a libboost_filesystem-mt.a)
 find_library(BOOST_system_LIBRARY NAMES libboost_system.a libboost_system-mt.a)
 
-include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/sdk/include)
+include_directories(${CMAKE_SOURCE_DIR}/include
+                    ${CMAKE_SOURCE_DIR}/sdk/include)
 
 if(DEFINED ENV{JAVA_HOME})
     find_package(JNI REQUIRED)
@@ -95,6 +95,9 @@ if (BENCHMARK)
     include_directories(SYSTEM third_party/benchmark/include)
     add_subdirectory(benchmark)
 endif ()
+
+option(BUILD_C_CONNECTOR "Build C Connector Or Not" ON)
+add_subdirectory(connector)
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/vendor DESTINATION ${LIB_NAME}/oms)

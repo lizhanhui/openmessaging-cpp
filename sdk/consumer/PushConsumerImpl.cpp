@@ -5,7 +5,7 @@
 #include "KeyValueImpl.h"
 #include "ByteMessageImpl.h"
 #include "consumer/ContextImpl.h"
-#include "interceptor/ConsumerInterceptor.h"
+#include "oms/interceptor/ConsumerInterceptor.h"
 
 using namespace io::openmessaging;
 using namespace io::openmessaging::consumer;

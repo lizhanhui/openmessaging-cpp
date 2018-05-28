@@ -1,8 +1,8 @@
 #ifndef OMS_BATCH_MESSAGE_SENDER_IMPL_H
 #define OMS_BATCH_MESSAGE_SENDER_IMPL_H
 
-#include "producer/BatchMessageSender.h"
-#include "Namespace.h"
+#include "oms/producer/BatchMessageSender.h"
+#include "oms/Namespace.h"
 #include "core.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, producer)

@@ -1,7 +1,7 @@
 #ifndef OMS_STREAMING_ITERATOR_IMPL_H
 #define OMS_STREAMING_ITERATOR_IMPL_H
 
-#include "consumer/StreamingIterator.h"
+#include "oms/consumer/StreamingIterator.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)
 

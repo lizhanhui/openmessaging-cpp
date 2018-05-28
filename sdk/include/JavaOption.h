@@ -5,7 +5,7 @@
 #include <vector>
 #include <jni.h>
 
-#include "Namespace.h"
+#include "oms/Namespace.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
 

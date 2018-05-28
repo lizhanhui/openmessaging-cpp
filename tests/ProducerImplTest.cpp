@@ -6,8 +6,8 @@
 #include "producer/ProducerImpl.h"
 #include "CountdownLatch.h"
 #include "BaseTest.h"
-#include "MessagingAccessPoint.h"
-#include "OMS.h"
+#include "oms/MessagingAccessPoint.h"
+#include "oms/Dynamic.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
 

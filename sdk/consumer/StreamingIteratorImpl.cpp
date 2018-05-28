@@ -1,5 +1,5 @@
-#include "OMS.h"
-#include "Message.h"
+#include "oms/Dynamic.h"
+#include "oms/Message.h"
 #include "consumer/StreamingIteratorImpl.h"
 
 using namespace io::openmessaging;

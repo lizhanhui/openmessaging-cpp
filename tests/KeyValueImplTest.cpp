@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include "core.h"
 #include "KeyValueImpl.h"
-#include "OMS.h"
+#include "oms/Dynamic.h"
 
 class KeyValueImplTest : public ::testing::Test {
 public:

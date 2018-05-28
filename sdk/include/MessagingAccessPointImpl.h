@@ -1,7 +1,7 @@
 #ifndef OMS_MESSAGING_ACCESS_POINT_IMPL_H
 #define OMS_MESSAGING_ACCESS_POINT_IMPL_H
 
-#include "MessagingAccessPoint.h"
+#include "oms/MessagingAccessPoint.h"
 #include "ServiceLifecycleImpl.h"
 #include "core.h"
 

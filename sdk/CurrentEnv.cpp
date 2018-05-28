@@ -1,7 +1,7 @@
 #include <jni.h>
 
 #include "core.h"
-#include "OMSException.h"
+#include "oms/OMSException.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
     extern JavaVM *jvm;

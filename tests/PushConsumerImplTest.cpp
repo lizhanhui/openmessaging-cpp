@@ -5,7 +5,7 @@
 #include "MessagingAccessPointImpl.h"
 #include "CountdownLatch.h"
 #include "BaseTest.h"
-#include "BuiltinKeys.h"
+#include "oms/BuiltinKeys.h"
 
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)

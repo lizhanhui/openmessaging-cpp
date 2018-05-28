@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
-#include "consumer/PullConsumer.h"
-#include "MessagingAccessPoint.h"
+#include "oms/consumer/PullConsumer.h"
+#include "oms/MessagingAccessPoint.h"
 #include "core.h"
 #include "KeyValueImpl.h"
-#include "BuiltinKeys.h"
+#include "oms/BuiltinKeys.h"
 #include "BaseTest.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)

@@ -3,10 +3,10 @@
 #include <gtest/gtest.h>
 
 #include "core.h"
-#include "OMS.h"
+#include "oms/Dynamic.h"
 #include "KeyValueImpl.h"
 #include "BaseTest.h"
-#include "MessagingAccessPoint.h"
+#include "oms/MessagingAccessPoint.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
 

@@ -4,7 +4,7 @@
 #include <boost/thread.hpp>
 #include <boost/chrono.hpp>
 #include <gtest/gtest.h>
-#include "Namespace.h"
+#include "oms/Namespace.h"
 #include "CurrentEnv.h"
 #include "core.h"
 #include <cstdlib>

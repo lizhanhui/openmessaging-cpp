@@ -1,9 +1,9 @@
 #ifndef OMS_SERVICE_LIFECYCLE_IMPL_H
 #define OMS_SERVICE_LIFECYCLE_IMPL_H
 
-#include "ServiceLifecycle.h"
+#include "oms/ServiceLifecycle.h"
 #include "core.h"
-#include "Namespace.h"
+#include "oms/Namespace.h"
 
 BEGIN_NAMESPACE_2(io, openmessaging)
 

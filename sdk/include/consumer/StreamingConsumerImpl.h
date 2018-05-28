@@ -1,10 +1,10 @@
 #ifndef OMS_PUSH_CONSUMER_IMPL_H
 #define OMS_PUSH_CONSUMER_IMPL_H
 
-#include "Namespace.h"
-#include "consumer/StreamingConsumer.h"
+#include "oms/Namespace.h"
+#include "oms/consumer/StreamingConsumer.h"
 #include "ServiceLifecycleImpl.h"
-#include "consumer/StreamingIterator.h"
+#include "oms/consumer/StreamingIterator.h"
 
 BEGIN_NAMESPACE_3(io, openmessaging, consumer)
 

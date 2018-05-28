@@ -3,7 +3,7 @@ add_library(oms_rocketmq SHARED
         CurrentEnv.cpp
         core.cpp
         KeyValueImpl.cpp
-        OMS.cpp
+        Dynamic.cpp
         ServiceLifecycleImpl.cpp
         PromiseImpl.cpp
 
